@@ -1,4 +1,3 @@
-# https://github.com/woutervanheeswijk/multi_asset_basket/blob/main/multi_asset_price_path_simulation.ipynb
 import numpy as np
 from tqdm.autonotebook import tqdm
 
