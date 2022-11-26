@@ -96,15 +96,3 @@ class ReferenceSol:
         disc_factor = np.exp(-self.rfr * self.T)
 
         return np.sum(mean_payoff) * disc_factor
-
-
-
-        
-
-
-
-            
-
-
-
-
