@@ -88,11 +88,10 @@ class ReferenceSol:
         # Keep only prices at expiry S(T)
         sim_prices = np.array(sim_prices_list)
         terminal_prices = sim_prices[:,:,-1]
-        # Compute payoff max(S(T)-K, 0)
-        payoff = np.maximum(terminal_prices - self.K, 0)
-        mean_payoff = np.mean(payoff, axis=0)  # Sample mean of payoffs (sample of size self.nsim)
+        # Compute payoff max(mean(S(T))-K, 0) for each simulation assuming equal weights in portfolio
+        payoff = np.maximum(np.mean(terminal_prices, axis=1) - self.K, 0)
+        mean_payoff = np.mean(payoff)  # Sample mean of payoffs (sample of size self.nsim)
         # Discount factor
         disc_factor = np.exp(-self.rfr * self.T)
 
-        # Compute mean of max(S-K, 0) across assets assuming equal weights and discount
-        return np.mean(mean_payoff) * disc_factor
+        return mean_payoff * disc_factor
