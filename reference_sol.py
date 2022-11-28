@@ -85,13 +85,14 @@ class ReferenceSol:
         for i in tqdm(range(self.nsim), desc="Running simulations"):
             sim_prices_list.append(self.compute_asset_paths())
         
-        # Keep only prices at expiry
+        # Keep only prices at expiry S(T)
         sim_prices = np.array(sim_prices_list)
         terminal_prices = sim_prices[:,:,-1]
-        # Compute payoff
+        # Compute payoff max(S(T)-K, 0)
         payoff = np.maximum(terminal_prices - self.K, 0)
         mean_payoff = np.mean(payoff, axis=0)
         # Discount to time 0
         disc_factor = np.exp(-self.rfr * self.T)
 
-        return np.sum(mean_payoff) * disc_factor
+        # Compute mean of max(S-K, 0) across assets assuming equal weights and discount
+        return np.mean(mean_payoff) * disc_factor
