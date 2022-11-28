@@ -90,8 +90,8 @@ class ReferenceSol:
         terminal_prices = sim_prices[:,:,-1]
         # Compute payoff max(S(T)-K, 0)
         payoff = np.maximum(terminal_prices - self.K, 0)
-        mean_payoff = np.mean(payoff, axis=0)
-        # Discount to time 0
+        mean_payoff = np.mean(payoff, axis=0)  # Sample mean of payoffs (sample of size self.nsim)
+        # Discount factor
         disc_factor = np.exp(-self.rfr * self.T)
 
         # Compute mean of max(S-K, 0) across assets assuming equal weights and discount
